@@ -1,0 +1,1 @@
+rame.setVisible(true);

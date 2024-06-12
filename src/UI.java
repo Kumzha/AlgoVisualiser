@@ -26,14 +26,25 @@ public class UI extends JPanel{
             });
 
             JButton shuffleButton = new JButton("Shuffle Array");
-            shuffleButton.addActionListener(e -> sortArray.shuffleArray(sortArray.array));
+            shuffleButton.addActionListener(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
+                    sortArray.shuffleArray(sortArray.array, false);
+                }
+            });
 
             JButton stopButton = new JButton("Stop Sorting");
             stopButton.addActionListener(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
-                    sortArray.sorter.cancel(true);
-                    SortArray.sorting = false;
+                    if(SortArray.sorting){
+                        Display.textField.setText("Sorting Stopped");
+                        sortArray.sorter.cancel(true);
+                        SortArray.sorting = false;
+                    }
+                    else{
+                        Display.textField.setText("No Sorting to Stop");
+                    }
                 }
             });
 
@@ -42,6 +53,7 @@ public class UI extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
                     sortArray.setAlgorythmType("Bubble Sort");
+                    Display.textField.setText("Bubble Sort Selected");
                 }
             });
 
@@ -50,6 +62,7 @@ public class UI extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
                     sortArray.setAlgorythmType("Merge Sort");
+                    Display.textField.setText("Merge Sort Selected");
                 }
             });
 
@@ -58,6 +71,7 @@ public class UI extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
                     sortArray.setAlgorythmType("Selection Sort");
+                    Display.textField.setText("Selection Sort Selected");
                 }
             });
 
@@ -66,6 +80,7 @@ public class UI extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
                     sortArray.setAlgorythmType("Insertion Sort");
+                    Display.textField.setText("Insertion Sort Selected");
                 }
             });
 
@@ -74,6 +89,7 @@ public class UI extends JPanel{
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
                     sortArray.setAlgorythmType("Cocktail Sort");
+                    Display.textField.setText("Cocktail Sort Selected");
                 }
             });
 
@@ -91,11 +107,10 @@ public class UI extends JPanel{
                         if (size == SortArray.size) {
                             return;
                         }
-                        
                         sortArray.setArraySize(size);
 
                     } catch (Exception e) {
-                        sizeTextArea.setText("Error");
+                        Display.textField.setText("Invalid Input, Size must be a number between 1 and 10000");
                     }
                 
                 }

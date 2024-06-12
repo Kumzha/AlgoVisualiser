@@ -39,7 +39,7 @@ public class SortArray extends JPanel {
 
         fillArray(array);
         
-        shuffleArray(array);
+        shuffleArray(array, false);
     }
 
     public void sorter(float[] array, SortArray sortArray, String algorythm) {
@@ -52,11 +52,13 @@ public class SortArray extends JPanel {
                 currentIndex = 0;
                 iterator = 0;
 
+                Display.textField.setText("Sorting...");
                 sorting = true;
 
                 SortAlgorythm.runAlgorythm(algorythm, sortArray);
 
                 repaint();
+                Display.textField.setText("Done!");
                 sorting = false;
                 return null;
             }
@@ -76,7 +78,7 @@ public class SortArray extends JPanel {
         }
     }
 
-    public void shuffleArray(float[] array) {
+    public void shuffleArray(float[] array, boolean setSize) {
 
         shuffler = new SwingWorker<>() {
         @Override
@@ -88,6 +90,7 @@ public class SortArray extends JPanel {
             if(sorting==true||shuffling==true){
                 return null;
             }
+            Display.textField.setText("Shuffling...");
             shuffling = true;
             
             Random rand = new Random();
@@ -97,13 +100,18 @@ public class SortArray extends JPanel {
                     swap(i,randomIndexToSwap);
                 }
         
-    
+            Display.textField.setText("Done!");
             shuffling = false;
             return null;
         }
         @Override
             protected void done() {
                 super.done();
+
+                if(setSize){
+                    Display.textField.setText("Array Size Changed to " + size);
+                }
+
                 currentIndex = 0;
                 iterator = 0;
                 repaint();
@@ -185,7 +193,7 @@ public class SortArray extends JPanel {
         SortArray.barWidth = (float) WIN_WIDTH / size;
         array = new float[size];
         fillArray(array);
-        shuffleArray(array);
+        shuffleArray(array, true);
 
     }
 
